@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql
+    user: root
+    environment:
+      - MSSQL_SA_PASSWORD=Nh@td11y
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
+    ports:
+      - "1436:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql/
+
+volumes:
+  mssql_data:
+    driver_opts:
+      device: /f/dulieudocker/APIDB
+      type: none
+      o: bind
