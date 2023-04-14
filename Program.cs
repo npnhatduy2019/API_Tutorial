@@ -1,4 +1,5 @@
 using API_Tutorial.Models;
+using API_Tutorial.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MyDbContext>(option=>{
     option.UseSqlServer(builder.Configuration.GetConnectionString("EntityDB"));
 });
+
+builder.Services.AddScoped<ICategoryRepositories,CategoryRepository>();
+
 var app = builder.Build();
 
 // builder.Services.AddDbContext<APIDBContext>(options=>{

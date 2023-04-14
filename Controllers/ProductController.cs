@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API_Tutorial.Controllers;
 
     [ApiController]
-    [Route("Controller")]
+    [Route("[Controller]")]
     public class ProductController : ControllerBase
     {
         private readonly MyDbContext _context;
@@ -18,7 +18,7 @@ namespace API_Tutorial.Controllers;
             var products=_context.Products.ToList();
             return Ok(products);
         }
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var product=_context.Products.FirstOrDefault(p=>p.Id==id);
@@ -35,18 +35,18 @@ namespace API_Tutorial.Controllers;
             };
 
             _context.Products.Add(product);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return Ok(product);
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var p= _context.Products.FirstOrDefault(p=>p.Id==id);
             if(p!=null)
             {
                 _context.Products.Remove(p);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return Ok(p);
             }
             else
@@ -54,7 +54,7 @@ namespace API_Tutorial.Controllers;
             
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id,ProductModel p)
         {
             var product = _context.Products.FirstOrDefault(p1=>p1.Id==id);
