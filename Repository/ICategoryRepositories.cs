@@ -4,7 +4,7 @@ namespace API_Tutorial.Repository
 {
     public interface ICategoryRepositories
     {
-        public List<Category> GetAll();
+        public Task<IEnumerable<Category>> GetAll();
 
         public Category GetCategory(int id);
 

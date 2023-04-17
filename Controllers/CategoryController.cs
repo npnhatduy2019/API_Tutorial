@@ -17,8 +17,8 @@ public class CategoryController:ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        
-        return Ok(repo.GetAll());
+        IEnumerable<Category> c= await repo.GetAll();
+        return Ok(c);
     }
 
     [HttpPost]

@@ -30,7 +30,7 @@ namespace API_Tutorial.Repository
             return c;
         }
 
-        List<Category> ICategoryRepositories.GetAll()
+        async Task<IEnumerable<Category>> ICategoryRepositories.GetAll()
         {
             return context.categories.ToList();
         }
