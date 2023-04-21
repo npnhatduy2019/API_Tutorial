@@ -1,5 +1,6 @@
 using API_Tutorial.Models;
 using API_Tutorial.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API_Tutorial.Controllers;
@@ -19,12 +20,14 @@ public class ProductRepoController:ControllerBase
     // {
     //     return Ok(await repo.GetAll(search));
     // }
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetAll(string? search, decimal? from, decimal? to, string? sortby,int page = 1)
     {
         return Ok(await repo.GetAll(search,from,to,sortby,page));
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> Create(ProductVM p)
     {

@@ -1,4 +1,5 @@
 using API_Tutorial.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace API_Tutorial.Repository
 {
@@ -24,7 +25,7 @@ namespace API_Tutorial.Repository
 
         public void Delete(int id)
         {
-            ProductModel p=context.Products.FirstOrDefault(p=>p.Id==id);
+            ProductModel p = context.Products.FirstOrDefault(p=>p.Id==id);
             if(p!=null)
             {
                 context.Products.Remove(p);
@@ -34,7 +35,7 @@ namespace API_Tutorial.Repository
 
         public async Task<ICollection<ProductModel>> GetAll(string? search,decimal? from,decimal? to,string sortby,int page = 1)
         {
-            var listprouct=context.Products.AsQueryable();
+            var listprouct=context.Products.Include(p=>p.category).AsQueryable();
             #region filter
             if(!string.IsNullOrEmpty(search))
             {
@@ -70,7 +71,7 @@ namespace API_Tutorial.Repository
             // return await Task.FromResult(listprouct.ToList());
 
             var resul=PaginatedList<ProductModel>.Create(listprouct,Page_Size,page);
-            return await Task.FromResult(resul?.ToList());
+            return await Task.FromResult(resul.ToList());
 
             #endregion
 

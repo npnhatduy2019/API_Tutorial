@@ -33,9 +33,14 @@ namespace API_Tutorial.Models
                 e.HasOne(o=>o.order).WithMany(od=>od.orderDetails).HasForeignKey(e=>e.OrderId).HasConstraintName("FK_OrderDetail_Order");
                 e.HasOne(e=>e.product).WithMany(p=>p.orderDetails).HasForeignKey(e=>e.ProductId).HasConstraintName("FK_OrderDetail_Product");;
             });
+            builder.Entity<UserModel>(e=>{
+                e.HasIndex(enty=>enty.UserName).IsUnique();
+            });
         }
 
         //public DbSet<Article> Articles{get;set;}
+        public DbSet<UserModel> Users{get;set;}
+        public DbSet<RefreshTokenModel> RefreshToken{get;set;}
         public DbSet<ProductModel>  Products{get;set;}
         public DbSet<Category> categories{get;set;}
 
